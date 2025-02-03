@@ -26,12 +26,13 @@ repositories {
 extra["springCloudVersion"] = "2024.0.0"
 
 dependencies {
-    implementation("org.springframework.cloud:spring-cloud-starter-gateway-mvc")
+    implementation("org.springframework.cloud:spring-cloud-starter-gateway")
     implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
     implementation("org.springframework.cloud:spring-cloud-starter-config")
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("io.projectreactor:reactor-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
