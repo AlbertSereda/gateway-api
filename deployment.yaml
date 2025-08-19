@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gateway-api-config
+data:
+  application.yaml: |
+    spring:
+      application:
+        name: gateway-api
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway-api
+  labels:
+    app: gateway-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gateway-api
+  template:
+    metadata:
+      name: gateway-api
+      labels:
+        app: gateway-api
+    spec:
+      containers:
+        - name: gateway-api
+          image: albertsereda/all-in-market-gateway-api
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          env:
+            - name: SPRING_CONFIG_IMPORT
+              value: file:/config/
+          volumeMounts:
+            - name: gateway-api-config
+              mountPath: /config
+      volumes:
+        - name: gateway-api-config
+          configMap:
+            name: gateway-api-config
+      restartPolicy: Always
