@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gateway-api-config
+  namespace: all-in-market
+data:
+  application.yaml: |
+    spring:
+      application:
+        name: gateway-api
+    
+    management:
+      endpoints:
+        web:
+          exposure:
+            include: health, info, prometheus
+      metrics:
+        tags:
+          application: ${spring.application.name}
